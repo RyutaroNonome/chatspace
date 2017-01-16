@@ -1,24 +1,61 @@
-# README
+# テーブル設計
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+## Users
 
-Things you may want to cover:
+|column    |type      |null      |
+|----------|----------|----------|
+|name      |string    |false     |
+|email     |string    |false     |
+|password  |string    |false     |
 
-* Ruby version
+### index
+- email
 
-* System dependencies
+### association
+- has_many :messages
+- has_many :chat_group_users
+- has_many :chat_groups, through: :chat_group_users
 
-* Configuration
 
-* Database creation
+## Messages
 
-* Database initialization
+|column    | type     |null      |
+|----------|----------|----------|
+|body      |text      |          |
+|chat_group_id|integer|     false|
+|user_id   |integer   |false     |
+|image     |string    |          |
 
-* How to run the test suite
+### index
+- chat_group_id
+- user_id
 
-* Services (job queues, cache servers, search engines, etc.)
+### association
+- belongs_to :user
+- belongs_to :chat_group
 
-* Deployment instructions
 
-* ...
+## ChatGroups
+
+|column    |type      |null      |
+|----------|----------|----------|
+|name      |string    |false     |
+
+### association
+- has_many :users, through: :chat_group_users
+- has_many :messages
+
+## ChatGroupsUsers
+
+|column    |type       |null      |
+|----------|-----------|----------|
+|user_id   |integer    |false     |
+|chat_group_id|integer |false     |
+
+### index
+- chat_group_id
+- user_id
+
+### association
+- belongs_to :user
+- belongs_to :chat_group
