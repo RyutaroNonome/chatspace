@@ -8,6 +8,6 @@
 
 
 User.find_or_create_by(id: 1) do |user|
-  user.email = 'example@example.com'
+  user.email = 'test@test.com'
   user.password = 'mosamosapoodle'
 end
