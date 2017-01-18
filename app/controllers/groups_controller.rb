@@ -1,6 +1,6 @@
 class GroupsController < ApplicationController
-  before_action :authenticate_user!, only: :index
-  # before_action :set_group, only: [:edit, :update]
+  # before_action :authenticate_user!, only: :index
+  before_action :set_group, only: [:edit, :update]
   def index
     @groups = current_user.groups
   end
@@ -15,8 +15,9 @@ class GroupsController < ApplicationController
     if @group.save
       # redirect_to group_messages_path(@group)
       # グループ作成テスト
-      redirect_to new_group_path(@group), notice: '新規グループを作成しました'
+      redirect_to new_group_path, notice: '新規グループを作成しました(｀・ω・´)ｂ'
     else
+      flash[:alert] = '新規グループ作成に失敗しました(´・ω・｀)'
       render :new
     end
   end
@@ -29,8 +30,9 @@ class GroupsController < ApplicationController
       # redirect_to group_messages_path(@group)
 
       # グループテスト
-      redirect_to new_group_path(@group)
+      redirect_to new_group_path, notice: 'グループを編集しました(｀・ω・´)ｂ'
     else
+      flash[:alert] = 'グループ編集に失敗しました(´・ω・｀)'
       render :edit
     end
   end
@@ -44,25 +46,3 @@ class GroupsController < ApplicationController
     params.require(:group).permit(:name, { user_ids: [] })
   end
 end
-
-
-
-
-  # def show
-  #   # before_action :set_group, only: [:edit, :update, :show]
-  # end
-  # # def create
-  # #   @group = Group.new(group_params)
-  # #     if @group.save
-  # #       redirect_to group_path(@group), notice: '新規グループを作成しました'
-  # #     else
-  # #       flash[:alert] = '新規グループ作成に失敗しました'
-  # #       render :new
-  # #     end
-  # # end
-  # def new
-  #   @group = Group.new
-  #   @group.users << current_user
-  # end
-  # def edit
-  # end
