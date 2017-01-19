@@ -14,6 +14,7 @@
 
 User.delete_all
 User.create(id: 1, email: 'hoge@hoge.com', password: 'password', password_confirmation: 'password', name: 'nonome')
+User.create(id: 1, email: 'test@test.com', password: 'password', password_confirmation: 'password', name: 'sakamoto')
 # User.create(id: 2, name: 'sakamoto')
 # User.create(id: 3, name: 'hirapa')
 # User.create(id: 4, name: 'watabe')
