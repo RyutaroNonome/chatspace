@@ -1,0 +1,20 @@
+.chat
+  / = render partial: 'groups/side_bar'
+  .chat-group
+    .group
+      .group__informations.left
+        .name
+          = @group.name
+        .members.gray
+          Members:
+          - @group.users.each do |user|
+            %span.member-name
+              = user.name
+      .right
+        = link_to 'Edit', edit_group_path(@group), class: 'edit'
+    %ul.messages.position-relative
+      / = render partial: 'layouts/flash'
+      = render @group.messages.includes(:user)
+    = form_for [@group, @message], html: { class: 'chat__form' } do |f|
+      = f.text_field :body, class: 'text-field', placeholder: 'Type a message'
+      = f.submit '送信', class: 'submit'
