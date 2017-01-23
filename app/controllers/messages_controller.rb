@@ -7,11 +7,13 @@ class MessagesController < ApplicationController
   end
 
   def create
+    @message = Message.new
     message = @group.messages.new(message_params)
     if message.save
       redirect_to group_messages_path(params[:group_id])
     else
-      redirect_to group_messages_path(params[:group_id]), alert: message.errors.full_messages.first
+      flash.now[:alert] = "メッセージが空だぞい_(┐「ε:)_"
+      render :index
     end
   end
 
