@@ -1,5 +1,5 @@
 class MessagesController < ApplicationController
-  before_action :authenticate_user!, only: [:index, :create]
+  # before_action :authenticate_user!, only: [:index, :create]
   before_action :set_group, only: [:index, :create]
 
   def index
@@ -8,8 +8,6 @@ class MessagesController < ApplicationController
 
   def create
     message = @group.messages.new(message_params)
-    # message = current_user.messages.new(message_params)
-    # binding.pry
     if message.save
       redirect_to group_messages_path(params[:group_id])
     else
@@ -18,6 +16,7 @@ class MessagesController < ApplicationController
   end
 
   private
+
   def message_params
     params.require(:message).permit(:body).merge(user_id: current_user.id)
   end
@@ -25,5 +24,4 @@ class MessagesController < ApplicationController
   def set_group
     @group = Group.includes(:users).find(params[:group_id])
   end
-
 end
