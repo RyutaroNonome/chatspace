@@ -7,9 +7,9 @@ class MessagesController < ApplicationController
   end
 
   def create
-    @message = Message.new
-    message = @group.messages.new(message_params)
-    if message.save
+    # @message = Message.new
+    @message = @group.messages.new(message_params)
+    if @message.save
       redirect_to group_messages_path(params[:group_id])
     else
       flash.now[:alert] = "メッセージが空だぞい_(┐「ε:)_"
