@@ -23,10 +23,7 @@ $(document).on('turbolinks:load', function(){
 
     // .はクラス指定、#はid指定
     var $form = $('.chat__form').get()[0];
-    console.log($form);
     var fd = new FormData($form);
-    console.log(fd);
-
     $.ajax({
       url: './messages.json',
       type: 'POST',
@@ -46,11 +43,8 @@ $(document).on('turbolinks:load', function(){
   });
 
   function scrollBottom(){
-    console.log("Yeah");
-    var pos = $(".messages").height();
-    console.log(pos);
     $('html, body').animate({
-      scrollTop: pos
+      scrollTop: $(".messages").height()
     }, "slow", "swing");
   };
 });
