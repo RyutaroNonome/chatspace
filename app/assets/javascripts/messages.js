@@ -18,9 +18,7 @@ $(document).on('turbolinks:load', function(){
 
 //メッセージ投稿時にAjax通信
   $('.chat__form').on('submit', function(e) {
-
     e.preventDefault();
-
     // .はクラス指定、#はid指定
     var $form = $(this).get()[0];
     var fd = new FormData($form);
