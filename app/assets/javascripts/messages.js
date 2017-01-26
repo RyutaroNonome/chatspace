@@ -17,12 +17,12 @@ $(document).on('turbolinks:load', function(){
   };
 
 //メッセージ投稿時にAjax通信
-  $('#message_submit').on('click', function(e) {
+  $('.chat__form').on('submit', function(e) {
 
     e.preventDefault();
 
     // .はクラス指定、#はid指定
-    var $form = $('.chat__form').get()[0];
+    var $form = $(this).get()[0];
     var fd = new FormData($form);
     $.ajax({
       url: './messages.json',
@@ -36,6 +36,7 @@ $(document).on('turbolinks:load', function(){
       // ↓ 投稿したら、投稿フォームを空にする。
       $('#message_body').val('');
       scrollBottom();
+      $('#message_submit').attr('disabled', false);
     })
     .fail(function(data) {
       alert('エラーが発生しました(´・ω・｀)')
