@@ -18,4 +18,7 @@
       = render @group.messages.includes(:user)
     = form_for [@group, @message], html: { class: 'chat__form' } do |f|
       = f.text_field :body, class: 'text-field', placeholder: 'Type a message'
+      = f.file_field :image, id: 'new_image'
+      / ↓ アイコンで後ほど使う一行
+      / %i.fa.fa-image
       = f.submit '送信', class: 'submit', id: 'message_submit'

@@ -1,7 +1,7 @@
 $(document).on('turbolinks:load', function(){
 //メッセージの仮HTML
   function insertedHtml(message){
-    if(data.image){
+    if(message.image){
       var insertImage = "<br><img src='" + message.image + "' class='message_img'>"
     }else{
       var insertImage = "";
@@ -40,6 +40,7 @@ $(document).on('turbolinks:load', function(){
       $('.messages').append(insertedHtml(res));
       // ↓ 投稿したら、投稿フォームを空にする。
       $('#message_body').val('');
+      $('#new_image').val('');
       scrollBottom();
     })
     .fail(function() {

@@ -4,5 +4,7 @@
       = message.user.name
     %span.time
       = message.created_at.to_s(:default)
-  %p.message__body
-    = message.body
+    %p.message__body
+      = message.body
+      - if message.image.present?
+        = image_tag(message.image, class: 'message_img')
