@@ -12,9 +12,10 @@
               = user.name
       .right
         = link_to 'Edit', edit_group_path(@group), class: 'edit'
+  .chat-body
     %ul.messages.position-relative
       / = render partial: 'layouts/flash'
       = render @group.messages.includes(:user)
     = form_for [@group, @message], html: { class: 'chat__form' } do |f|
       = f.text_field :body, class: 'text-field', placeholder: 'Type a message'
-      = f.submit '送信', class: 'submit'
+      = f.submit '送信', class: 'submit', id: 'message_submit'
