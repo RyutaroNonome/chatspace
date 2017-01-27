@@ -34,11 +34,13 @@ $(document).on('turbolinks:load', function(){
       // ↓ 投稿したら、投稿フォームを空にする。
       $('#message_body').val('');
       scrollBottom();
-      $('#message_submit').attr('disabled', false);
+      // $('#message_submit').attr('disabled', false);
     })
     .fail(function(data) {
       alert('エラーが発生しました(´・ω・｀)')
     });
+    // ↓ なぜ37行目に書いたらうまくいかないのか？
+    return false;
   });
 
   function scrollBottom(){
