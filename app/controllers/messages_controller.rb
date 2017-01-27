@@ -5,10 +5,6 @@ class MessagesController < ApplicationController
   def index
     @message = Message.new
     @groups = current_user.groups
-    respond_to do |format|
-      format.html
-      format.json { render json: @group.messages.includes(:user).map(&:change_json)}
-    end
   end
 
   def create
@@ -16,11 +12,10 @@ class MessagesController < ApplicationController
     if @message.save
       respond_to do |format|
         format.html do
-          redirect_to group_messages_path(params[:group_id]), notice: '(((((((((((っ･ω･)っ メッセージを送信しました！'
+          redirect_to group_messages_path(params[:group_id]),
+                      notice: '(((((((((((っ･ω･)っ メッセージを送信しました！'
         end
-        format.json do
-          render json: @message.change_json
-        end
+        format.json
       end
     else
       flash.now[:alert] = "メッセージが空だぞい_(┐「ε:)_"
