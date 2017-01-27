@@ -42,6 +42,8 @@ $(document).on('turbolinks:load', function(){
       $('#message_body').val('');
       $('#new_image').val('');
       scrollBottom();
+      //452pxまでのみ投稿後スクロールできる。
+      console.log($(".messages").height());
     })
     .fail(function() {
       alert('エラーが発生しました(´・ω・｀)')
