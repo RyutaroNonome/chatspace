@@ -18,4 +18,9 @@
       = render @group.messages.includes(:user)
     = form_for [@group, @message], html: { class: 'chat__form' } do |f|
       = f.text_field :body, class: 'text-field', placeholder: 'Type a message'
+      = f.file_field :image, id: 'new_image'
+      / ↓ アイコンで後ほど使う一行
+      / %i.fa.fa-image
+      / ↓ これ行付けたら画像投稿時非同期通信できた。なぜ？？
+      = f.hidden_field :image_cache
       = f.submit '送信', class: 'submit', id: 'message_submit'

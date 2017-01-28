@@ -1,6 +1,11 @@
 $(document).on('turbolinks:load', function(){
 //メッセージの仮HTML
   function insertedHtml(message){
+    if(message.image){
+      var insertImage = "<br><img src='" + message.image + "' class='message_img'>"
+    }else{
+      var insertImage = "";
+    };
     var html = "<li class='chat-message'>\n"                    +
                "<div class='message__information clearfix'>\n"  +
                "<span class='name'>\n"                          +
@@ -10,9 +15,11 @@ $(document).on('turbolinks:load', function(){
                  message.date                                   +
                "</span>\n"                                      +
                "</div>\n"                                       +
-               "<p class='message__body'>\n"                    +
+               "<span class='message__body'>\n"                 +
                  message.body                                   +
-               "</p>\n"                                         +
+               "\n"                                             +
+                 insertImage                                    +
+               "</span>\n"                                      +
                "</li>"
     return $(html);
   };
@@ -33,7 +40,10 @@ $(document).on('turbolinks:load', function(){
       $('.messages').append(insertedHtml(res));
       // ↓ 投稿したら、投稿フォームを空にする。
       $('#message_body').val('');
+      $('#new_image').val('');
       scrollBottom();
+      //452pxまでのみ投稿後スクロールできる。
+      console.log($(".messages").height());
     })
     .fail(function() {
       alert('エラーが発生しました(´・ω・｀)')

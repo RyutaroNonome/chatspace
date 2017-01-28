@@ -25,9 +25,13 @@ class MessagesController < ApplicationController
 
   private
 
+  ## Which is better "user_id" or "group_id" ?
   def message_params
-    params.require(:message).permit(:body).merge(user_id: current_user.id)
+    params.require(:message).permit(:body, :image, :image_cache).merge(user_id: current_user.id)
   end
+  # def message_params
+  #   params.require(:message).permit(:content, :image).merge(group_id: params[:group_id])
+  # end
 
   def set_group
     @group = Group.includes(:users).find(params[:group_id])

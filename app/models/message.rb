@@ -4,4 +4,5 @@ class Message < ApplicationRecord
 
   # bodyがカラでないことを検証する。
   validates :body, presence: true
+  mount_uploader :image, ImageUploader
 end
