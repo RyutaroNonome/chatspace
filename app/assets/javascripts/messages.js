@@ -56,4 +56,23 @@ $(document).on('turbolinks:load', function(){
       scrollTop: $(".messages").height()
     }, "slow", "swing");
   };
+
+  //setinterval
+  setInterval(reloadMessages, 10000);
+
+  function reloadMessages() {
+    $.ajax({
+      url: './messages',
+      type: 'GET',
+      dataType: 'json'
+    })
+    .done(function(message) {
+      var reloadedHtml = '';
+      messsage.forEach(function (message) {
+        reloadedHtml += insertHtml(message);
+      });
+      $('.messages').append(reloadHtml);
+      scrollBottom();
+    })
+  };
 });
