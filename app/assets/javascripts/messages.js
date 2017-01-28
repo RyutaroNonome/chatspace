@@ -21,7 +21,7 @@ $(document).on('turbolinks:load', function(){
                  insertImage                                    +
                "</span>\n"                                      +
                "</li>"
-    return $(html);
+    return html;
   };
 
 //メッセージ投稿時にAjax通信
@@ -56,4 +56,28 @@ $(document).on('turbolinks:load', function(){
       scrollTop: $(".messages").height()
     }, "slow", "swing");
   };
+
+  function reloadMessages() {
+    // ↓ setInterval発動後、元々の.messsageをカラにする。
+    $('.messages').empty();
+    $.ajax({
+      url: './messages',
+      type: 'GET',
+      dataType: 'json'
+    })
+    .done(function(data) {
+      var reloadedHtml = '';
+      data.forEach(function (message) {
+        reloadedHtml += insertedHtml(message);
+      });
+      $('.messages').append(reloadedHtml);
+      scrollBottom();
+    })
+    .fail(function(data){
+      console.log("error");
+    })
+  };
+
+  //setinterval
+  setInterval(reloadMessages, 10000);
 });
