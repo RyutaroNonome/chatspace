@@ -2,34 +2,29 @@ $(document).on('turbolinks:load', function(){
 
 //インクリメンタルサーチ時のユーザリストのHTML
   function buildUsersList(id, name) {
-    var list = $(
-                "<div class='chat-group-user users_list clearfix'>" +
-                  "<p class='chat-group-users__name'>" +
-                    name +
-                    "<a class='user-search-add add_users \
-                      chat-group-user__btn chat-group-user__btn--add' \
-                        data-user-id="   + id   +
-                      " data-user-name=" + name +
-                      ">追加" +
-                    "</a>" +
-                  "</p>" +
-                "</div>"
-                );
-    console.log(id, name);
+    var list = $(`<div class='chat-group-user users_list clearfix'>
+                    <p class='chat-group-users__name'>
+                      ${name}
+                      <a class='user-search-add add_users chat-group-user__btn chat-group-user__btn--add'
+                         data-user-id=${id}
+                         data-user-name=${name}
+                        >追加
+                      </a>
+                    </p>
+                  </div>`);
     return list;
   };
 
 //追加ボタンを押した時のユーザーリストのHTML
   function buildUser(id, name) {
-    var buildUserHtml = $(
-                          "<div class='chat-group-user remove_list clearfix'>" +
-                            "<input type='hidden' name='group[user_ids][]' value=" + id + ">" +
-                            "<p class='chat-group-users__name'>" + name +
-                              "<a class='user-search-remove remove_users chat-group-user__btn chat-group-user__btn--remove'>削除" +
-                              "</a>" +
-                            "</p>" +
-                          "</div>"
-                          );
+    var buildUserHtml = $(`<div class='chat-group-user remove_list clearfix'>
+                            <input type='hidden' name='group[user_ids][]' value=${id}>
+                            <p class='chat-group-users__name'>
+                              ${name}
+                              <a class='user-search-remove remove_users chat-group-user__btn chat-group-user__btn--remove'>削除
+                              </a>
+                            </p>
+                          </div>`);
     return buildUserHtml;
   };
 
@@ -38,7 +33,7 @@ $(document).on('turbolinks:load', function(){
 //ajax通信
   function ajaxSearch(input) {
 
-    var result = $('#user-search-field');
+    var result = $('#user-render-field');
 
     $.ajax({
       url:      '/groups/search',
@@ -53,7 +48,6 @@ $(document).on('turbolinks:load', function(){
       $.each(data, function(i, user) {
         result.append(buildUsersList(user.id, user.name));
       });
-      result.appendTo($('.chat-group-form__search'));
     })
     .fail(function(data) {
       alert("エラーが発生しました")
@@ -61,14 +55,15 @@ $(document).on('turbolinks:load', function(){
   };
 
 
-//削除ボタンを押した時のイベント
+//削除ボタンを押した時
   $("#chat-group-users").on("click", ".remove_users", function() {
     $(this).parents(".remove_list").remove();
   });
 
 
-//追加ボタンを押した時のイベント
-  $("#user-search-field").on("click", ".add_users", function() {
+//追加ボタンを押した時
+  $("#user-render-field").on("click", ".add_users", function() {
+    console.log("add ok");
     var id = $(this).data("userId");
     var name = $(this).data("userName");
     $(this).parents(".users_list").remove();
@@ -76,7 +71,7 @@ $(document).on('turbolinks:load', function(){
   });
 
 
-//インクリメンタルサーチ検索欄にキー入力したときのイベント
+//incrementalサーチ検索欄にキー入力した時
   var preFunc = null;
   var preInput = '';
   var input = '';
