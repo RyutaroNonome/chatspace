@@ -1,7 +1,7 @@
 $(document).on('turbolinks:load', function(){
 
 //インクリメンタルサーチ時のユーザリストのHTML
-  function insertUsersList(id, name) {
+  function buildUsersList(id, name) {
     var list = $(
                 "<div class='chat-group-user users_list clearfix'>" +
                   "<p class='chat-group-users__name'>" +
@@ -15,13 +15,13 @@ $(document).on('turbolinks:load', function(){
                   "</p>" +
                 "</div>"
                 );
-    console.log(list);
+    console.log(id, name);
     return list;
   };
 
 //追加ボタンを押した時のユーザーリストのHTML
-  function appendUser(id, name) {
-    var appendUserHtml = $(
+  function buildUser(id, name) {
+    var buildUserHtml = $(
                           "<div class='chat-group-user remove_list clearfix'>" +
                             "<input type='hidden' name='group[user_ids][]' value=" + id + ">" +
                             "<p class='chat-group-users__name'>" + name +
@@ -30,7 +30,7 @@ $(document).on('turbolinks:load', function(){
                             "</p>" +
                           "</div>"
                           );
-    return appendUserHtml;
+    return buildUserHtml;
   };
 
 
@@ -38,7 +38,7 @@ $(document).on('turbolinks:load', function(){
 //ajax通信
   function ajaxSearch(input) {
 
-    var result = $('#user-search-result');
+    var result = $('#user-search-field');
 
     $.ajax({
       url:      '/groups/search',
@@ -48,9 +48,10 @@ $(document).on('turbolinks:load', function(){
     })
 
     .done(function(data) {
+      console.log("incremental ok");
       $('.users_list').remove();
       $.each(data, function(i, user) {
-        result.append(insertUsersList(user.id, user.name));
+        result.append(buildUsersList(user.id, user.name));
       });
       result.appendTo($('.chat-group-form__search'));
     })
@@ -67,11 +68,11 @@ $(document).on('turbolinks:load', function(){
 
 
 //追加ボタンを押した時のイベント
-  $("#user-search-result").on("click", ".add_users", function() {
+  $("#user-search-field").on("click", ".add_users", function() {
     var id = $(this).data("userId");
     var name = $(this).data("userName");
     $(this).parents(".users_list").remove();
-    $("#chat-group-users").append(appendUser(id, name));
+    $("#chat-group-users").append(buildUser(id, name));
   });
 
 
