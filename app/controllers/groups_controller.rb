@@ -16,12 +16,12 @@ class GroupsController < ApplicationController
       # グループ作成テスト ← のちほどパス変えるかも
       redirect_to new_group_path, notice: '新規グループを作成しました(｀・ω・´)ｂ'
     else
-      flash[:alert] = '新規グループ作成に失敗しました(´・ω・｀)'
-      render :new
+      redirect_to new_group_path, alert: '新規グループ作成に失敗しました(´・ω・｀)'
     end
   end
 
   def edit
+    @users = @group.users.where.not(id: current_user.id)
   end
 
   def update
@@ -33,6 +33,14 @@ class GroupsController < ApplicationController
     else
       flash[:alert] = 'グループ編集に失敗しました(´・ω・｀)'
       render :edit
+    end
+  end
+
+  def search
+    users = User.incremental_search(params[:keyword], current_user)
+    respond_to do |format|
+      format.html
+      format.json { render json: users }
     end
   end
 
